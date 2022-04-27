@@ -1,0 +1,49 @@
+#+TITLE: Biorg
+#+OPTIONS: toc:nil
+
+Biorg is a schema and a text format for representing events.
+
+Each biorg event has three main parts - a guest, a host, and a datum. The datum is the description of the event. The guest is the person that describes the event. The host is the person that the event is all about. Imagine five guests sitting around a fireplace and telling stories about the host. Each story happened to the host in the past, but it is also happening in the present as the guest is telling it.
+
+
+* Schema of biorg
+ - Host name - the name of the person that the event is all about.
+
+ - Host date - the date that the event happened.
+
+ - Guest name - the name of the person that describes the event.
+
+ - Guest date - the date when the event was described.
+
+ - Datum - the description of the event.
+
+ - File path (optional) - the path to the digital asset that verifies the event.
+
+ - any other optional metadata
+
+* Format of biorg files
+
+The biorg format is a subset of [[https://orgmode.org/][org-mode]]. It consists of first-level headings with the value ".", a property block with metadata, and an entry that specifies an arbitrary text called "datum".
+
+#+begin_src org
+,* .
+:PROPERTIES:
+:HOST_DATE: <2001-01-01>
+:HOST_NAME: bob
+:GUEST_DATE: <2011-01-01>
+:GUEST_NAME: alice
+:FILE_PATH: path/to/song-recording.wav
+:TAG: memoirs
+:END:
+Alice remembers that ten years ago Bob wrote her a song. She has a recording of it, but does not remember what the song was called.
+,* .
+:PROPERTIES:
+:HOST_DATE: <2002-01-01>
+:HOST_NAME: bob
+:GUEST_DATE: <2011-01-01>
+:GUEST_NAME: alice
+:FILE_PATH: path/to/poem-recording.wav
+:TAG: memoirs
+:END:
+Alice remembers that nine years ago Bob wrote her a poem. She has a recording of it, but does not remember what the poem was called.
+#+end_src
