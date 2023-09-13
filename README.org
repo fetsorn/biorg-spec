@@ -3,17 +3,16 @@
 
 Biorg is a schema and a text format for representing events.
 
-Each biorg event has three main parts - a guest, a host, and a datum. The datum is the description of the event. The guest is the person that describes the event. The host is the person that the event is all about. Imagine five guests sitting around a fireplace and telling stories about the host. Each story happened to the host in the past, but it is also happening in the present as the guest is telling it.
-
+Each biorg event has three main parts - a datum, a say metadata and an act metadata. The datum is the description of the event. The say is the person that describes the event. The act is the person that the event is all about. Imagine five guests sitting around a fireplace and telling stories about the host. Each story happened to the host (act) in the past, but it is also happening in the present as the guest (say) is telling it.
 
 * Schema of biorg
- - Host name - the name of the person that the event is all about.
+ - Act name - the name of the person that the event is all about.
 
- - Host date - the date that the event happened.
+ - Act date - the date that the event happened.
 
- - Guest name - the name of the person that describes the event.
+ - Say name - the name of the person that describes the event.
 
- - Guest date - the date when the event was described.
+ - Say date - the date when the event was described.
 
  - Datum - the description of the event.
 
@@ -28,22 +27,40 @@ The biorg format is a subset of [[https://orgmode.org/][org-mode]]. It consists 
 #+begin_src org
 ,* .
 :PROPERTIES:
-:HOST_DATE: <2001-01-01>
-:HOST_NAME: bob
-:GUEST_DATE: <2011-01-01>
-:GUEST_NAME: alice
-:FILE_PATH: path/to/song-recording.wav
+:ACTDATE: <2001-01-01>
+:ACTNAME: bob
+:SAYDATE: <2011-01-01>
+:SAYNAME: alice
+:FILEPATH: path/to/song-recording.wav
 :TAG: memoirs
 :END:
 Alice remembers that ten years ago Bob wrote her a song. She has a recording of it, but does not remember what the song was called.
 ,* .
 :PROPERTIES:
-:HOST_DATE: <2002-01-01>
-:HOST_NAME: bob
-:GUEST_DATE: <2011-01-01>
-:GUEST_NAME: alice
-:FILE_PATH: path/to/poem-recording.wav
+:ACTDATE: <2002-01-01>
+:ACTNAME: bob
+:SAYDATE: <2011-01-01>
+:SAYNAME: alice
+:FILEPATH: path/to/poem-recording.wav
 :TAG: memoirs
 :END:
 Alice remembers that nine years ago Bob wrote her a poem. She has a recording of it, but does not remember what the poem was called.
+#+end_src
+
+** array values
+
+Example of database that has arrays: https://source.qualifiedself.org/fetsorn/csvs-en
+
+Some fields can be of type object or array object.
+
+Array object “files” is a JS object {"_": "files", "UUID": "ba0561...076", "items": []}.
+
+Object “file” is a JS object {"_": "file", "UUID": "88d3...26d", "filename": "pic.jpg", "filehash": "ba05...69"}.
+
+The objects are serialized as an elisp property list
+#+begin_src org
+,* .
+:PROPERTIES:
+:FILES: (:_ "files" :UUID "ba0561...076" :items ((:_ "file" :UUID "88d3...26d" :filename "pic.jpg" :filehash "ba05...69") (:_ "file" :UUID "acab...94a" :filename "story.txt" :filehash "aa12...cb")))
+:END:
 #+end_src
